@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>CellphoneDeathMatch</title>
+    <title>Woop</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -11,10 +11,58 @@
 
     <link rel="stylesheet" href="assets/vendor.css">
     <link rel="stylesheet" href="assets/cellphone-death-match.css">
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js" charset="utf-8"></script>
     {{content-for "head-footer"}}
   </head>
   <body>
+    <h1>Phone Price Comparison</h1>
+    <div style="height:500px; width:500px;">
+    <canvas id="myChart" width="50" height="50"></canvas>
+    <script>
+
+
+    var ctx = document.getElementById("myChart");
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        responsive: true,
+        maintainAspectRatio: false,
+        data: {
+          labels: ["March 2016", "April 2016", "May 2016", "June 2016", "July 2016", "August 2016",
+           "September 2016", "October 2016", "November 2016", "December 2016", "January 2017", "February 2017", "March 2017", "April 2017", "May 2017"],
+     datasets: [
+       {
+         label: "Samsung Galaxy S7 - 32GB",
+         backgroundColor: "rgba(220,220,220,0.5)",
+         fillColor : "rgba(220,220,220,0.5)",
+     strokeColor : "rgba(220,220,220,1)",
+     pointColor : "rgba(220,220,220,1)",
+     pointStrokeColor : "#419CF1",
+     data : [659,869,650,595,620,600,565,555,535,635,600,378,500,479,439]
+       },
+       {
+         label: "Apple iPhone 7 - 128GB",
+         backgroundColor: "rgba(151,187,205,0.5)",
+         fillColor : "rgba(151,187,205,0.5)",
+     strokeColor : "rgba(151,187,205,1)",
+     pointColor : "rgba(151,187,205,1)",
+     pointStrokeColor : "#fff",
+     data : [0,0,0,0,0,0,1250,898,840,900,589,700,725,739,739]
+       }
+     ],
+
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+    </script>
+    <div>
     {{content-for "body"}}
 
     <script src="assets/vendor.js"></script>
