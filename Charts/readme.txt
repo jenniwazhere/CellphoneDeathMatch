@@ -1,1 +1,0 @@
-Fixed charts for presentation
