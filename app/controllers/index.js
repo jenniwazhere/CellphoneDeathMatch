@@ -3,6 +3,11 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   ajax: Ember.inject.service(),
 
+
+  init: function() {
+      this.send("queryEbay");
+  },
+
   actions: {
     iphoneQuery() {
       console.log("Querying ebay for iphone7...");
@@ -39,16 +44,16 @@ export default Ember.Controller.extend({
         console.log(galaxyaverageprice);
         this.store.createRecord('galaxy', {averageprice: parseFloat(galaxyaverageprice)}).save();
         return galaxyaverageprice;
-      });;
+      });
     },
 
     queryEbay() {
-      let self = this
-      Ember.run.later(function() {
-        self.send('iphoneQuery');
-        self.send('galaxyQuery');
-      }, 5000);
+        this.send('iphoneQuery');
+        this.send('galaxyQuery');
+        let self = this;
+        Ember.run.later( function (){
+          self.send('queryEbay');
+        }, 10000)
     }
   }
-
 });
