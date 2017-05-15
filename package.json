@@ -46,7 +46,7 @@
     "ember-radio-button": "1.0.7",
     "ember-resolver": "^2.0.3",
     "emberfire": "2.0.7",
-    "loader.js": "^4.0.1"
+    "loader.js": "^4.0.1",
     "ember-truth-helpers": "1.2.0",
     "loader.js": "^4.0.1",
     "node-sass": "3.4.2"
