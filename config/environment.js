@@ -7,13 +7,16 @@ module.exports = function(environment) {
     baseURL: '/',
     locationType: 'auto',
     EmberENV: {
-      EXTEND_PROTOTYPES: {
-      Date: false,
-      },
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
       }
+    },
+    firebase: {
+      apiKey: "AIzaSyADTNc2_mI9UfA1K9mNiIXR5xyYh24z088",
+      authDomain: "cellphonedeathmatch.firebaseapp.com",
+      databaseURL: "https://cellphonedeathmatch.firebaseio.com",
+      storageBucket: "cellphonedeathmatch.appspot.com"
     },
 
     APP: {
@@ -24,10 +27,10 @@ module.exports = function(environment) {
 
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
-    // ENV.APP.LOG_ACTIVE_GENERATION = true;
-    // ENV.APP.LOG_TRANSITIONS = true;
-    // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
-    // ENV.APP.LOG_VIEW_LOOKUPS = true;
+     ENV.APP.LOG_ACTIVE_GENERATION = true;
+     ENV.APP.LOG_TRANSITIONS = true;
+     ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
+     ENV.APP.LOG_VIEW_LOOKUPS = true;
   }
 
   if (environment === 'test') {

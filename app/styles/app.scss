@@ -1,13 +1,5 @@
-//changes the background to orange
+// Fix for Roboto font path
+$roboto-font-path: '../assets/';
 
-/*
-$bg-color: coral;
-html {
-    background: $bg-color;
-}
-*/
-
-// bootstrap variable overrides
-// ----------------------------
-// end bootstrap variable overrides
-@import 'bootstrap';
+// Materialize styles
+@import "materialize";

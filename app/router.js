@@ -6,8 +6,6 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.route('ebaytest');
-  this.route('data');
 });
 
 export default Router;
