@@ -1,6 +1,8 @@
 import Ember from 'ember';
 var iphoneprice = '739';
 var galaxyprice = '439';
+var iphoneArray = [0,0,0,0,0,0,0,0,0,0,0,0];
+var galaxyArray = [0,0,0,0,0,0,0,0,0,0,0,0];
 export default Ember.Controller.extend({
   ajax: Ember.inject.service(),
 
@@ -24,6 +26,8 @@ export default Ember.Controller.extend({
         }
         const iphoneaverageprice = averageprice/resultsArray.length;
         iphoneprice = iphoneaverageprice;
+        iphoneArray.push(iphoneprice);
+        iphoneArray.shift();
         this.store.createRecord('iphone', {averageprice: parseFloat(iphoneaverageprice)}).save();
         return iphoneaverageprice;
       });
@@ -31,7 +35,7 @@ export default Ember.Controller.extend({
     },
 
     galaxyQuery(){
-      var yup = this.get('ajax').request('https://svcs.ebay.com/services/search/FindingService/v1?SECURITY-APPNAME=BrianNuc-Cellphon-PRD-f69e2c47f-23e2c69e&OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&keywords=Galaxy,S7&paginationInput.entriesPerPage=100&GLOBAL-ID=EBAY-US&siteid=0type=', {
+      this.get('ajax').request('https://svcs.ebay.com/services/search/FindingService/v1?SECURITY-APPNAME=BrianNuc-Cellphon-PRD-f69e2c47f-23e2c69e&OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&keywords=Galaxy,S7&paginationInput.entriesPerPage=100&GLOBAL-ID=EBAY-US&siteid=0type=', {
         method: 'POST',
         dataType: "jsonp"
       }).then(result => {
@@ -43,8 +47,10 @@ export default Ember.Controller.extend({
         }
         const galaxyaverageprice = averageprice/resultsArray.length;
         galaxyprice = galaxyaverageprice;
+        galaxyArray.push(galaxyprice);
+        galaxyArray.shift();
         this.store.createRecord('galaxy', {averageprice: parseFloat(galaxyaverageprice)}).save();
-        this.set("averageprice", parseFloat(galaxyaverageprice))
+        this.set("averageprice", parseFloat(galaxyaverageprice));
         return galaxyaverageprice;
       });
     },
@@ -53,7 +59,7 @@ export default Ember.Controller.extend({
       console.log("Galaxy Price: " + galaxyprice);
       console.log("Iphone Price: " + iphoneprice);
       var ctx = document.getElementById("myChart");
-      var myChart = new Chart(ctx, {
+      new Chart(ctx, {
           type: 'line',
           responsive: true,
           maintainAspectRatio: false,
@@ -68,6 +74,7 @@ export default Ember.Controller.extend({
        strokeColor : "rgba(220,220,220,1)",
        pointColor : "rgba(220,220,220,1)",
        pointStrokeColor : "#419CF1",
+       //data: testArray
        data : [659,869,650,595,620,600,565,555,535,635,600,378,500,479,galaxyprice]
          },
          {
@@ -94,14 +101,60 @@ export default Ember.Controller.extend({
       });
     },
 
+    myChart2(){
+      console.log("Galaxy Price: " + galaxyprice);
+      console.log("Iphone Price: " + iphoneprice);
+      var ctx = document.getElementById("myChart2");
+      new Chart(ctx, {
+          type: 'line',
+          responsive: true,
+          maintainAspectRatio: false,
+          data: {
+            labels: ["120s", "110s", "100s", "90s", "80s", "70s", "60s", "50s", "40s", "30s", "20s", "10s", "Now"],
+       datasets: [
+         {
+           label: "Samsung Galaxy S7 - 32GB",
+           backgroundColor: "rgba(220,220,220,0.5)",
+           fillColor : "rgba(220,220,220,0.5)",
+       strokeColor : "rgba(220,220,220,1)",
+       pointColor : "rgba(220,220,220,1)",
+       pointStrokeColor : "#419CF1",
+       //data: testArray
+       data : galaxyArray
+         },
+         {
+           label: "Apple iPhone 7 - 128GB",
+           backgroundColor: "rgba(151,187,205,0.5)",
+           fillColor : "rgba(151,187,205,0.5)",
+       strokeColor : "rgba(151,187,205,1)",
+       pointColor : "rgba(151,187,205,1)",
+       pointStrokeColor : "#fff",
+       data : iphoneArray
+         }
+       ],
+
+          },
+          options: {
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          beginAtZero:true
+                      }
+                  }]
+              }
+          }
+      });
+    },
+
     queryEbay() {
         this.send('iphoneQuery');
         this.send('galaxyQuery');
         this.send('myChart');
+        this.send('myChart2');
         let self = this;
         Ember.run.later( function (){
           self.send('queryEbay');
-        }, 10000)
+        }, 10000);
     }
   }
 });
