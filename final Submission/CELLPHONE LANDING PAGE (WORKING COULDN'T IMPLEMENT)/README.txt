@@ -1,1 +1,0 @@
-Operational with Browser-Sync but could not implement using Ember
